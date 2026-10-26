@@ -1,0 +1,9 @@
+column_name,data_type,nullable,value_range_or_categories,example_value,description_and_business_rules
+trans_id,Integer,No,"1 - 5000",501,"Sequential primary key identifier for transaction auditing and chronological tracking."
+timestamp,Datetime,No,"2024-01-01 00:17:00 to 2024-02-26 21:25:05","2024-01-11 20:13:15","Transaction execution timestamp formatted as YYYY-MM-DD HH:MM:SS; exhibits diurnal transaction density patterns."
+card_token,String,No,"CARD_XXXX1000 - CARD_XXXX9999",CARD_XXXX6711,"Masked, PCI-DSS compliant surrogate primary card account identifier preserving privacy."
+amount,Float,No,"0.50 - 4500.00",142.50,"Transaction purchase amount in USD. Legitimate transactions follow category gamma distributions; fraud features probing (<$5) or spike ($300-$3500) values."
+merchant_category,Categorical,No,"Grocery, Restaurant, Fuel, Healthcare, Electronics, Travel, Online",Electronics,"Industry sector classification of merchant. Online, Travel, and Electronics feature higher historical fraud rates."
+is_fraud,Integer (Binary),No,"0 or 1",0,"Ground truth anomaly label. 0 = Legitimate transaction (96.5%), 1 = Fraudulent anomaly (3.5%)."
+merchant_id,Categorical,No,"MER0001 - MER0500",MER0153,"Unique identifier for acquiring merchant terminal or online vendor entity."
+card_type,Categorical,No,"Debit, Credit, Prepaid",Credit,"Card payment network instrument type: Debit (35%), Credit (35%), Prepaid (30%). Maintained for demographic fairness auditing."

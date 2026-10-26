@@ -1,0 +1,5 @@
+Model,Precision,Recall,F1-Score,FPR,ROC-AUC,PR-AUC,True Positives (TP),False Positives (FP),False Negatives (FN),True Negatives (TN)
+Isolation Forest,0.1886,0.1886,0.1886,0.0294,0.5824,0.1105,33,142,142,4683
+Local Outlier Factor (LOF),0.3681,0.3029,0.3323,0.0189,0.7753,0.2431,53,91,122,4734
+Autoencoder (Neural MSE),0.2229,0.2229,0.2229,0.0282,0.6243,0.1838,39,136,136,4689
+One-Class SVM,0.3333,0.3771,0.3539,0.0274,0.5273,0.3225,66,132,109,4693
