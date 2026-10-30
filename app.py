@@ -19,9 +19,11 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 import numpy as np
 import pandas as pd
 import joblib
+import warnings
+warnings.filterwarnings('ignore')
 
 # Server configuration
-PORT = 5000
+PORT = int(os.environ.get("PORT", 5000))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WEB_DIR = os.path.join(BASE_DIR, "web")
 MODELS_DIR = os.path.join(BASE_DIR, "models")

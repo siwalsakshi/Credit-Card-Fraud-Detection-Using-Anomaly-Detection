@@ -121,5 +121,6 @@ The script will:
 
 ## 📚 Detailed Documentation
 
+- **Deployment & Cloud Hosting Guide:** See [`DEPLOYMENT.md`](DEPLOYMENT.md)
 - **Project Milestones & Task Roadmap:** See [`progress.md`](progress.md)
 - **Mathematical Formulations & Complete Synopsis:** See [`content.md`](content.md)
