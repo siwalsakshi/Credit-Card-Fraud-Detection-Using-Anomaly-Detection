@@ -4,7 +4,21 @@ This repository is fully containerized and configured for zero-friction cloud de
 
 ---
 
-## 🚀 Option 1: 1-Click Cloud Deployment via Render (Recommended Free Tier)
+## 🚀 Option 1: 1-Click Deployment on Vercel (Team: sakshisiwal)
+
+The project is pre-configured with [`vercel.json`](vercel.json), serverless Python functions in [`api/index.py`](api/index.py), and static assets in [`public/`](public/).
+
+1. Open the direct Vercel import link for your team:  
+   👉 **[https://vercel.com/new?teamSlug=sakshisiwal](https://vercel.com/new?teamSlug=sakshisiwal)**
+2. Select your repository:  
+   `siwalsakshi/Credit-Card-Fraud-Detection-Using-Anomaly-Detection`
+3. Vercel automatically detects the root configuration, [`vercel.json`](vercel.json), and serverless Python API.
+4. Click **Deploy**. Vercel will build and assign an instant global SSL URL:  
+   `https://credit-card-fraud-detection-using-anomaly-detection.vercel.app`
+
+---
+
+## ⚡ Option 2: 1-Click Cloud Deployment via Render
 
 1. Fork or push this repository to your GitHub account:  
    `https://github.com/siwalsakshi/Credit-Card-Fraud-Detection-Using-Anomaly-Detection`

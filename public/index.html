@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHIELD-AI | Credit Card Fraud Anomaly Detection Platform</title>
+  <meta name="description" content="AI-driven real-time credit card fraud detection system using Isolation Forest, Local Outlier Factor, Neural Bottleneck Autoencoders, and One-Class SVM with SMOTE.">
+  <meta name="author" content="HCLTech Career Shaper Programme - Project 32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="app-header">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">SHIELD<span class="brand-accent">.AI</span></span>
+          <span class="brand-subtitle">Project 32 • HCLTech Career Shaper</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#simulator" class="nav-link active">Live Detector</a>
+        <a href="#kpi-section" class="nav-link">Overview</a>
+        <a href="#transactions" class="nav-link">Transaction Stream</a>
+        <a href="#benchmark" class="nav-link">Model Benchmarks</a>
+        <a href="#fairness" class="nav-link">Fairness Audit</a>
+        <a href="#architecture" class="nav-link">Architecture</a>
+      </nav>
+
+      <div class="header-status">
+        <span class="status-dot pulse"></span>
+        <span class="status-label">4 Models Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <!-- Hero / Header Section -->
+    <section class="hero-section">
+      <div class="hero-badge">Digital-Data-AI / AIML Domain</div>
+      <h1 class="hero-title">Credit Card Fraud Anomaly Detection Engine</h1>
+      <p class="hero-description">
+        Real-time financial anomaly scoring utilizing <strong>SMOTE oversampling</strong>, 
+        <strong>Isolation Forest</strong>, <strong>Local Outlier Factor (LOF)</strong>, 
+        <strong>Neural Bottleneck Autoencoders</strong>, and <strong>One-Class SVM</strong> with ethical demographic parity controls.
+      </p>
+    </section>
+
+    <!-- KPI Metric Cards Grid -->
+    <section id="kpi-section" class="kpi-grid">
+      <div class="kpi-card glass-panel" id="kpi-transactions">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Processed</span>
+          <span class="kpi-icon blue">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value" id="val-total-txns">5,000</div>
+        <div class="kpi-subtext">Calibrated Kaggle stream</div>
+      </div>
+
+      <div class="kpi-card glass-panel" id="kpi-fraud-rate">
+        <div class="kpi-header">
+          <span class="kpi-title">Anomaly Rate</span>
+          <span class="kpi-icon red">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value" id="val-fraud-rate">3.50%</div>
+        <div class="kpi-subtext">175 identified fraud incursions</div>
+      </div>
+
+      <div class="kpi-card glass-panel" id="kpi-auc">
+        <div class="kpi-header">
+          <span class="kpi-title">Best Model ROC-AUC</span>
+          <span class="kpi-icon green">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value" id="val-roc-auc">77.53%</div>
+        <div class="kpi-subtext">Local Outlier Factor (LOF)</div>
+      </div>
+
+      <div class="kpi-card glass-panel" id="kpi-latency">
+        <div class="kpi-header">
+          <span class="kpi-title">Scoring Latency</span>
+          <span class="kpi-icon purple">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value" id="val-latency">&lt; 1.8 ms</div>
+        <div class="kpi-subtext">High-throughput CPU inference</div>
+      </div>
+
+      <div class="kpi-card glass-panel" id="kpi-fairness">
+        <div class="kpi-header">
+          <span class="kpi-title">Demographic Parity</span>
+          <span class="kpi-icon cyan">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value" id="val-fairness">0.31% max</div>
+        <div class="kpi-subtext">DPDP Act 2023 Compliant</div>
+      </div>
+    </section>
+
+    <!-- LIVE FRAUD DETECTOR / SIMULATOR -->
+    <section id="simulator" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">Interactive Evaluation</div>
+        <h2 class="section-title">Live Transaction Anomaly Detector</h2>
+        <p class="section-desc">Test any incoming transaction parameter in real-time or pick one of the calibrated attack/routine scenarios below.</p>
+      </div>
+
+      <!-- Quick Preset Buttons -->
+      <div class="presets-bar glass-panel">
+        <span class="presets-label">Quick Scenarios:</span>
+        <button class="preset-btn" data-preset="grocery">
+          <span class="preset-tag normal">Legit</span> Normal Grocery ($38.50, 14:00, Debit)
+        </button>
+        <button class="preset-btn" data-preset="probing">
+          <span class="preset-tag fraud">Fraud</span> Nocturnal Micro-Probing ($1.99, 03:30, Prepaid)
+        </button>
+        <button class="preset-btn" data-preset="electronics">
+          <span class="preset-tag fraud">Fraud</span> Midnight Electronics Spike ($2,150.00, 02:15, Credit)
+        </button>
+        <button class="preset-btn" data-preset="fuel">
+          <span class="preset-tag normal">Legit</span> Morning Fuel Refill ($54.00, 08:30, Credit)
+        </button>
+        <button class="preset-btn" data-preset="travel">
+          <span class="preset-tag fraud">Fraud</span> High-Value Flight Spike ($3,450.00, 23:45, Credit)
+        </button>
+      </div>
+
+      <div class="detector-layout">
+        <!-- Input Form Card -->
+        <div class="detector-form-card glass-panel">
+          <h3 class="card-heading">Transaction Parameters</h3>
+          <form id="fraud-detect-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="input-amount">Transaction Amount (USD $)</label>
+                <div class="input-prefix-wrapper">
+                  <span class="input-prefix">$</span>
+                  <input type="number" id="input-amount" step="0.01" min="0.5" max="10000" value="48.50" required>
+                </div>
+                <div class="range-hint">Typical range: $2.00 – $4,500.00</div>
+              </div>
+
+              <div class="form-group">
+                <label for="input-category">Merchant Category</label>
+                <select id="input-category" required>
+                  <option value="Online">Online / E-Commerce (High Risk)</option>
+                  <option value="Electronics">Electronics (High Risk)</option>
+                  <option value="Travel">Travel & Airlines (High Risk)</option>
+                  <option value="Grocery" selected>Grocery & Supermarkets</option>
+                  <option value="Restaurant">Restaurant & Dining</option>
+                  <option value="Fuel">Fuel & Automotive</option>
+                  <option value="Healthcare">Healthcare & Pharmacy</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="input-card-type">Card Network Instrument</label>
+                <select id="input-card-type" required>
+                  <option value="Credit">Credit Card</option>
+                  <option value="Debit" selected>Debit Card</option>
+                  <option value="Prepaid">Prepaid / Virtual Card</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="input-model">Anomaly Detection Engine</label>
+                <select id="input-model" required>
+                  <option value="ensemble" selected>Ensemble Voting (4 Models)</option>
+                  <option value="lof">Local Outlier Factor (Highest ROC-AUC)</option>
+                  <option value="isolation_forest">Isolation Forest (Tree Partitioning)</option>
+                  <option value="autoencoder">Neural Bottleneck Autoencoder</option>
+                  <option value="one_class_svm">One-Class SVM (Hyperplane Boundary)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full-width">
+                <div class="slider-header">
+                  <label for="input-hour">Transaction Execution Hour (24h Clock)</label>
+                  <span class="slider-badge" id="hour-display">14:00 (Daytime Traffic)</span>
+                </div>
+                <input type="range" id="input-hour" min="0" max="23" value="14" class="custom-slider">
+                <div class="slider-ticks">
+                  <span>00:00 (Night)</span>
+                  <span>06:00 (Morning)</span>
+                  <span>12:00 (Noon)</span>
+                  <span>18:00 (Evening)</span>
+                  <span>23:00</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row form-checkbox-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="input-weekend">
+                <span class="checkmark"></span>
+                <span>Weekend Transaction (Saturday / Sunday)</span>
+              </label>
+
+              <div class="card-token-preview">
+                <span class="token-label">Masked Token:</span>
+                <span class="token-val" id="display-token">CARD_XXXX7646</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" id="btn-submit-predict">
+              <span class="btn-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </span>
+              <span>Execute Real-Time Anomaly Scoring</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Output Score / Decision Card -->
+        <div class="detector-result-card glass-panel" id="result-card">
+          <div class="result-header">
+            <span class="result-tag">Real-Time ML Decision</span>
+            <span class="latency-badge" id="res-latency">Latency: 1.2 ms</span>
+          </div>
+
+          <!-- Gauge visualization -->
+          <div class="gauge-container">
+            <svg class="radial-gauge" viewBox="0 0 200 120">
+              <!-- Background arc -->
+              <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" />
+              <!-- Foreground animated arc -->
+              <path class="gauge-fg" id="gauge-fill" d="M 20 100 A 80 80 0 0 1 180 100" />
+            </svg>
+            <div class="gauge-center">
+              <div class="gauge-percentage" id="res-score">12.4%</div>
+              <div class="gauge-label">Anomaly Risk Score</div>
+            </div>
+          </div>
+
+          <!-- Decision Badge -->
+          <div class="decision-badge normal" id="res-decision-badge">
+            <span class="decision-icon" id="res-decision-icon">✓</span>
+            <span class="decision-text" id="res-decision-text">TRANSACTION APPROVED</span>
+          </div>
+
+          <!-- Model Used and Level -->
+          <div class="risk-meta">
+            <div class="meta-item">
+              <span class="meta-label">Risk Category:</span>
+              <span class="meta-val normal" id="res-risk-level">NORMAL / LOW RISK</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Model Engine:</span>
+              <span class="meta-val" id="res-model-used">Multi-Model Ensemble</span>
+            </div>
+          </div>
+
+          <!-- Multi-model vote breakdown -->
+          <div class="model-votes-grid">
+            <div class="vote-item" id="vote-if">
+              <span class="vote-name">Isolation Forest</span>
+              <span class="vote-status legit">PASS</span>
+            </div>
+            <div class="vote-item" id="vote-lof">
+              <span class="vote-name">Local Outlier Factor</span>
+              <span class="vote-status legit">PASS</span>
+            </div>
+            <div class="vote-item" id="vote-ae">
+              <span class="vote-name">Autoencoder MSE</span>
+              <span class="vote-status legit">PASS</span>
+            </div>
+            <div class="vote-item" id="vote-svm">
+              <span class="vote-name">One-Class SVM</span>
+              <span class="vote-status legit">PASS</span>
+            </div>
+          </div>
+
+          <!-- Diagnostic Explanations -->
+          <div class="diagnostic-box">
+            <div class="diag-title">Anomaly Diagnostic Breakdown:</div>
+            <ul class="diag-list" id="diag-factors-list">
+              <li>
+                <span class="factor-tag low">Standard</span>
+                <span>Amount and timestamp conform closely to established legitimate cardholder habits.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE TRANSACTION STREAM & EXPLORER -->
+    <section id="transactions" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">Audit Trail</div>
+        <h2 class="section-title">Streaming Transaction Explorer</h2>
+        <p class="section-desc">Audit real recorded transactions from <code>dataset.csv</code> (5,000 total). Click any transaction to load into the live simulator.</p>
+      </div>
+
+      <div class="table-card glass-panel">
+        <div class="table-toolbar">
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">All (5,000)</button>
+            <button class="filter-btn" data-filter="fraud">Fraud Incursions (175)</button>
+            <button class="filter-btn" data-filter="legit">Legitimate (4,825)</button>
+          </div>
+
+          <div class="table-search">
+            <input type="text" id="table-search-input" placeholder="Search Card Token or Merchant ID...">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table" id="transactions-table">
+            <thead>
+              <tr>
+                <th>Txn ID</th>
+                <th>Timestamp</th>
+                <th>Masked Card Token</th>
+                <th>Amount ($)</th>
+                <th>Merchant Category</th>
+                <th>Merchant ID</th>
+                <th>Card Type</th>
+                <th>Ground Truth</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <!-- Dynamically populated via JS -->
+              <tr><td colspan="9" class="table-loading">Loading transaction stream...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <div class="table-info" id="table-pagination-info">Showing 1 to 20 of 5,000 transactions</div>
+          <div class="pagination-controls">
+            <button class="page-btn" id="btn-prev-page" disabled>Previous</button>
+            <span class="page-current" id="page-indicator">Page 1</span>
+            <button class="page-btn" id="btn-next-page">Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODEL BENCHMARKS -->
+    <section id="benchmark" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">Algorithm Comparison</div>
+        <h2 class="section-title">Comparative Performance Benchmark</h2>
+        <p class="section-desc">Evaluation of all four project algorithms across class-imbalance metrics, precision-recall trade-offs, and false positive rates.</p>
+      </div>
+
+      <div class="benchmark-grid">
+        <!-- Model 1 Card -->
+        <div class="benchmark-card glass-panel">
+          <div class="model-badge">Tree Ensembles</div>
+          <h3 class="model-name">Isolation Forest</h3>
+          <p class="model-desc">Partitions feature space with random binary trees; isolates anomalous sparse points in shallow depths.</p>
+          <div class="metric-row">
+            <span class="m-label">ROC-AUC:</span>
+            <span class="m-val">58.24%</span>
+          </div>
+          <div class="progress-bar-bg"><div class="progress-bar-fg" style="width: 58.2%"></div></div>
+          <div class="metric-row">
+            <span class="m-label">PR-AUC:</span>
+            <span class="m-val">11.05%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">Precision / Recall:</span>
+            <span class="m-val">18.86% / 18.86%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">False Positive Rate (FPR):</span>
+            <span class="m-val green">2.94%</span>
+          </div>
+        </div>
+
+        <!-- Model 2 Card (Winner) -->
+        <div class="benchmark-card glass-panel best-card">
+          <div class="best-ribbon">Top ROC-AUC</div>
+          <div class="model-badge winner">Density Outlier</div>
+          <h3 class="model-name">Local Outlier Factor (LOF)</h3>
+          <p class="model-desc">Calculates local reachability density against k-nearest neighbors; uncovers clustered micro-fraud.</p>
+          <div class="metric-row">
+            <span class="m-label">ROC-AUC:</span>
+            <span class="m-val highlight">77.53%</span>
+          </div>
+          <div class="progress-bar-bg"><div class="progress-bar-fg winner" style="width: 77.5%"></div></div>
+          <div class="metric-row">
+            <span class="m-label">PR-AUC:</span>
+            <span class="m-val highlight">24.31%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">Precision / Recall:</span>
+            <span class="m-val">36.81% / 30.29%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">False Positive Rate (FPR):</span>
+            <span class="m-val green">1.89%</span>
+          </div>
+        </div>
+
+        <!-- Model 3 Card -->
+        <div class="benchmark-card glass-panel">
+          <div class="model-badge">Deep Neural Net</div>
+          <h3 class="model-name">Bottleneck Autoencoder</h3>
+          <p class="model-desc">MLP with compression bottleneck (14-6-14); flags fraud instances via high reconstruction MSE error.</p>
+          <div class="metric-row">
+            <span class="m-label">ROC-AUC:</span>
+            <span class="m-val">62.43%</span>
+          </div>
+          <div class="progress-bar-bg"><div class="progress-bar-fg" style="width: 62.4%"></div></div>
+          <div class="metric-row">
+            <span class="m-label">PR-AUC:</span>
+            <span class="m-val">18.38%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">Precision / Recall:</span>
+            <span class="m-val">22.29% / 22.29%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">False Positive Rate (FPR):</span>
+            <span class="m-val green">2.82%</span>
+          </div>
+        </div>
+
+        <!-- Model 4 Card -->
+        <div class="benchmark-card glass-panel">
+          <div class="best-ribbon">Top Recall</div>
+          <div class="model-badge">Support Vector</div>
+          <h3 class="model-name">One-Class SVM</h3>
+          <p class="model-desc">Fits RBF kernel boundary around nominal data points; isolates outliers outside the support hyperplane.</p>
+          <div class="metric-row">
+            <span class="m-label">F1-Score / PR-AUC:</span>
+            <span class="m-val highlight">35.39% / 32.25%</span>
+          </div>
+          <div class="progress-bar-bg"><div class="progress-bar-fg" style="width: 52.7%"></div></div>
+          <div class="metric-row">
+            <span class="m-label">Recall (Sensitivity):</span>
+            <span class="m-val highlight">37.71%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">Precision / FPR:</span>
+            <span class="m-val">33.33% / 2.74%</span>
+          </div>
+          <div class="metric-row">
+            <span class="m-label">True Positives Caught:</span>
+            <span class="m-val">66 / 175</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ETHICAL FAIRNESS AUDIT -->
+    <section id="fairness" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">Responsible AI & Governance</div>
+        <h2 class="section-title">Demographic Fairness & Non-Discrimination Audit</h2>
+        <p class="section-desc">Audited against the DPDP Act 2023 & IEEE 7003 standards to ensure fair access and prevent discriminatory false declines across card networks.</p>
+      </div>
+
+      <div class="fairness-card glass-panel">
+        <div class="fairness-header">
+          <div class="fairness-title-group">
+            <h3>False Positive Rate (FPR) by Payment Card Network</h3>
+            <p>Verification that legitimate cardholders are not disproportionately blocked based on payment instrument.</p>
+          </div>
+          <div class="compliance-badge">
+            <span class="badge-icon">🛡</span>
+            <span>DPDP Act 2023 & Fair Access Verified</span>
+          </div>
+        </div>
+
+        <div class="fairness-grid">
+          <div class="fairness-item">
+            <div class="f-brand">
+              <span class="f-name">Credit Cards</span>
+              <span class="f-share">35.0% Volume (1,611 Legit)</span>
+            </div>
+            <div class="f-stat">
+              <span class="f-fpr">1.80% FPR</span>
+              <span class="f-count">29 False Alarms</span>
+            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fg green" style="width: 18.0%"></div></div>
+            <div class="f-status">Within Parity Tolerance</div>
+          </div>
+
+          <div class="fairness-item">
+            <div class="f-brand">
+              <span class="f-name">Debit Cards</span>
+              <span class="f-share">35.0% Volume (1,633 Legit)</span>
+            </div>
+            <div class="f-stat">
+              <span class="f-fpr">2.08% FPR</span>
+              <span class="f-count">34 False Alarms</span>
+            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fg green" style="width: 20.8%"></div></div>
+            <div class="f-status">Within Parity Tolerance</div>
+          </div>
+
+          <div class="fairness-item">
+            <div class="f-brand">
+              <span class="f-name">Prepaid / Virtual Cards</span>
+              <span class="f-share">30.0% Volume (1,581 Legit)</span>
+            </div>
+            <div class="f-stat">
+              <span class="f-fpr">1.77% FPR</span>
+              <span class="f-count">28 False Alarms</span>
+            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fg green" style="width: 17.7%"></div></div>
+            <div class="f-status">Within Parity Tolerance</div>
+          </div>
+        </div>
+
+        <div class="fairness-footer">
+          <div class="f-metric">
+            <span class="fm-label">Maximum Inter-Group Disparity:</span>
+            <span class="fm-val">0.31% (1.77% min vs 2.08% max)</span>
+          </div>
+          <div class="f-metric">
+            <span class="fm-label">Fairness Verdict:</span>
+            <span class="fm-val green">Statistically Insignificant Delta (Passed Zero-Bias Threshold)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE & PIPELINE -->
+    <section id="architecture" class="section-container">
+      <div class="section-header">
+        <div class="section-tag">System Design</div>
+        <h2 class="section-title">End-to-End Pipeline & Architecture</h2>
+        <p class="section-desc">Data Flow Diagram (Level 0) and decoupled 4-layer AI architecture powering real-time inference.</p>
+      </div>
+
+      <div class="arch-card glass-panel">
+        <div class="arch-steps-grid">
+          <div class="arch-step">
+            <div class="step-num">01</div>
+            <h4>Ingestion & Token Masking</h4>
+            <p>5,000 raw transaction stream ingested with PCI-DSS <code>CARD_XXXX####</code> tokenization, privacy masking, and validation.</p>
+          </div>
+          <div class="arch-step">
+            <div class="step-num">02</div>
+            <h4>Feature Engineering & SMOTE</h4>
+            <p>Cyclic diurnal hours (sin/cos), log-scaled purchase values, categorical one-hot vectors, and SMOTE augmentation.</p>
+          </div>
+          <div class="arch-step">
+            <div class="step-num">03</div>
+            <h4>Multi-Model Anomaly Scoring</h4>
+            <p>Concurrent evaluation across Isolation Forest, LOF, PyTorch Autoencoder MSE, and One-Class SVM boundaries.</p>
+          </div>
+          <div class="arch-step">
+            <div class="step-num">04</div>
+            <h4>Demographic Fairness & Alert</h4>
+            <p>Automated False Positive Rate monitoring across card types, sub-2ms response routing, and bank ledger updates.</p>
+          </div>
+        </div>
+
+        <div class="arch-img-wrapper">
+          <img src="/visualizations/00_system_architecture.png" alt="System Architecture Diagram" class="arch-img" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="fb-title">SHIELD.AI</span>
+        <span class="fb-desc">Credit Card Fraud Anomaly Detection • Project No. 32</span>
+      </div>
+      <div class="footer-copy">
+        HCLTech Career Shaper Programme • III Year Industry Project 2025–26 • Learner: Saksham
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
