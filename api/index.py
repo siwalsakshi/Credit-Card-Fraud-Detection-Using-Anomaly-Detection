@@ -21,14 +21,19 @@ API_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(API_DIR)
 
 def find_path(rel_path):
-    # Try project root first, then current api directory
-    p1 = os.path.join(BASE_DIR, rel_path)
-    if os.path.exists(p1):
-        return p1
-    p2 = os.path.join(API_DIR, rel_path)
-    if os.path.exists(p2):
-        return p2
-    return p1
+    check_roots = [
+        os.getcwd(),
+        BASE_DIR,
+        API_DIR,
+        os.path.dirname(BASE_DIR),
+        "/var/task"
+    ]
+    for root in check_roots:
+        if root:
+            candidate = os.path.join(root, rel_path)
+            if os.path.exists(candidate):
+                return candidate
+    return os.path.join(BASE_DIR, rel_path)
 
 DATASET_PATH = find_path("dataset.csv")
 MODELS_DIR = find_path("models")
@@ -195,6 +200,33 @@ def run_prediction(amount, hour, is_weekend, merchant_category, card_type, model
     }
 
 class handler(BaseHTTPRequestHandler):
+    def get_route(self):
+        parsed = urllib.parse.urlparse(self.path)
+        params = urllib.parse.parse_qs(parsed.query)
+        endpoint = params.get("endpoint", [""])[0].lower()
+        
+        matched = str(self.headers.get("x-matched-path", "")).lower()
+        forwarded = str(self.headers.get("x-forwarded-uri", "")).lower()
+        vercel_matched = str(self.headers.get("x-vercel-matched-path", "")).lower()
+        raw_path = self.path.lower()
+        
+        all_text = f"{endpoint} {matched} {forwarded} {vercel_matched} {raw_path}"
+        
+        if "status" in all_text:
+            return "status", params
+        if "stats" in all_text:
+            return "stats", params
+        if "benchmark" in all_text:
+            return "benchmark", params
+        if "fairness" in all_text:
+            return "fairness", params
+        if "transactions" in all_text:
+            return "transactions", params
+        if "predict" in all_text:
+            return "predict", params
+            
+        return "", params
+
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -204,12 +236,9 @@ class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         init_backend()
-        parsed = urllib.parse.urlparse(self.path)
-        path = parsed.path
-        params = urllib.parse.parse_qs(parsed.query)
+        route, params = self.get_route()
 
-        # Handle both /api/xxx and /xxx when rewritten
-        if path.endswith("/status"):
+        if route == "status":
             self.send_json_response({
                 "status": "online",
                 "service": "Credit Card Fraud Anomaly Engine (Vercel Serverless)",
@@ -217,7 +246,7 @@ class handler(BaseHTTPRequestHandler):
                 "models_loaded": list(models.keys()),
                 "total_records": len(df_dataset) if df_dataset is not None else 5000
             })
-        elif path.endswith("/stats"):
+        elif route == "stats":
             if df_dataset is None:
                 self.send_json_response({"error": "Dataset not loaded"}, 500)
                 return
@@ -238,7 +267,7 @@ class handler(BaseHTTPRequestHandler):
                 "card_types": df_dataset['card_type'].value_counts().to_dict()
             }
             self.send_json_response(stats)
-        elif path.endswith("/benchmark"):
+        elif route == "benchmark":
             if os.path.exists(BENCHMARK_PATH):
                 df_metrics = pd.read_csv(BENCHMARK_PATH)
                 self.send_json_response(df_metrics.to_dict(orient="records"))
@@ -249,7 +278,7 @@ class handler(BaseHTTPRequestHandler):
                     {"Model": "Autoencoder (Neural MSE)", "Precision": 0.2229, "Recall": 0.2229, "F1-Score": 0.2229, "FPR": 0.0282, "ROC-AUC": 0.6243, "PR-AUC": 0.1838, "TP": 39, "FP": 136},
                     {"Model": "One-Class SVM", "Precision": 0.3333, "Recall": 0.3771, "F1-Score": 0.3539, "FPR": 0.0274, "ROC-AUC": 0.5273, "PR-AUC": 0.3225, "TP": 66, "FP": 132}
                 ])
-        elif path.endswith("/fairness"):
+        elif route == "fairness":
             self.send_json_response({
                 "model": "Local Outlier Factor (LOF)",
                 "audit_timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -261,7 +290,7 @@ class handler(BaseHTTPRequestHandler):
                     {"card_type": "Prepaid", "total_legit": 1581, "false_positives": 28, "fpr": 1.77, "status": "Ethically Compliant"}
                 ]
             })
-        elif path.endswith("/transactions"):
+        elif route == "transactions":
             if df_dataset is None:
                 self.send_json_response({"total": 0, "transactions": []})
                 return
@@ -288,8 +317,8 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         init_backend()
-        parsed = urllib.parse.urlparse(self.path)
-        if parsed.path.endswith("/predict"):
+        route, _ = self.get_route()
+        if route == "predict" or "predict" in self.path.lower():
             length = int(self.headers.get("Content-Length", 0))
             body = self.rfile.read(length)
             try:
